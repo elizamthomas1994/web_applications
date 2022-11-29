@@ -37,29 +37,19 @@ describe Application do
       expect(response.body).to include('<a href="/albums/12">Ring Ring</a>')
       expect(response.body).to include('1973')
     end  
-  end  
+  end
 
-  context "GET /artists" do
-    it 'returns 200 OK' do
-      response = get('/artists')
+  context "GET /albums/new" do
+    it 'returns form to create new album' do
+      response = get('/albums/new')
+
       expect(response.status).to eq(200)
+      expect(response.body).to include ('<form method="POST" action="/albums">')
+      expect(response.body).to include ('<input type="text" name="title">')
+      expect(response.body).to include ('<input type="text" name="release_year">')
+      expect(response.body).to include ('<input type="text" name="artist_id">')
     end
-
-    it 'should return the list of artists' do
-      response = get('/artists')
-      expect(response.body).to include('<h1>Artists</h1>')
-      expect(response.body).to include('<a href="/artists/1">Pixies</a>')
-      expect(response.body).to include('Rock')
-      expect(response.body).to include('<a href="/artists/2">ABBA</a>')
-      expect(response.body).to include('Pop')
-      expect(response.body).to include('<a href="/artists/3">Taylor Swift</a>')
-      expect(response.body).to include('Pop')
-      expect(response.body).to include('<a href="/artists/4">Nina Simone</a>')
-      expect(response.body).to include('Pop')
-      expect(response.body).to include('<a href="/artists/5">Kiasmos</a>')
-      expect(response.body).to include('Experimental')
-    end
-  end  
+  end
 
   context "POST /albums" do
     it 'returns 200 OK' do
@@ -90,6 +80,50 @@ describe Application do
     end
   end
 
+  context "GET /albums/:id" do
+    it 'returns the HTML of album id' do
+      response = get('/albums/2')
+      expect(response.status).to eq (200)
+      expect(response.body).to include('<h1>Surfer Rosa</h1>')
+      expect(response.body).to include('Release year: 1988')
+      expect(response.body).to include('Artist: Pixies')
+      
+    end
+  end
+
+  context "GET /artists" do
+    it 'returns 200 OK' do
+      response = get('/artists')
+      expect(response.status).to eq(200)
+    end
+
+    it 'should return the list of artists' do
+      response = get('/artists')
+      expect(response.body).to include('<h1>Artists</h1>')
+      expect(response.body).to include('<a href="/artists/1">Pixies</a>')
+      expect(response.body).to include('Rock')
+      expect(response.body).to include('<a href="/artists/2">ABBA</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/3">Taylor Swift</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/4">Nina Simone</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/5">Kiasmos</a>')
+      expect(response.body).to include('Experimental')
+    end
+  end
+
+  context "GET /artists/new" do
+    it 'returns form to create new artist' do
+      response = get('/artists/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include ('<form method="POST" action="/artists">')
+      expect(response.body).to include ('<input type="text" name="name">')
+      expect(response.body).to include ('<input type="text" name="genre">')
+    end
+  end
+
   context "POST /artists" do
     it 'returns 200 OK' do
       response = post('/artists?id=6&name=Wild Nothing&genre=indie')
@@ -115,14 +149,12 @@ describe Application do
     end
   end
 
-  context "GET /albums/:id" do
+  context "GET /artists/:id" do
     it 'returns the HTML of album id' do
-      response = get('/albums/2')
+      response = get('/artists/1')
       expect(response.status).to eq (200)
-      expect(response.body).to include('<h1>Surfer Rosa</h1>')
-      expect(response.body).to include('Release year: 1988')
-      expect(response.body).to include('Artist: Pixies')
-      
+      expect(response.body).to include('<h1>Pixies</h1>')
+      expect(response.body).to include('Genre: Rock')
     end
   end
 end
