@@ -47,8 +47,17 @@ describe Application do
 
     it 'should return the list of artists' do
       response = get('/artists')
-      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos'
-      expect(response.body).to eq expected_response
+      expect(response.body).to include('<h1>Artists</h1>')
+      expect(response.body).to include('<a href="/artists/1">Pixies</a>')
+      expect(response.body).to include('Rock')
+      expect(response.body).to include('<a href="/artists/2">ABBA</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/3">Taylor Swift</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/4">Nina Simone</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/5">Kiasmos</a>')
+      expect(response.body).to include('Experimental')
     end
   end  
 
@@ -90,8 +99,19 @@ describe Application do
 
     it 'outputs newly created artist' do
       response = get('/artists')
-      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos, Wild Nothing'
-      expect(response.body).to eq expected_response
+      expect(response.body).to include('<h1>Artists</h1>')
+      expect(response.body).to include('<a href="/artists/1">Pixies</a>')
+      expect(response.body).to include('Rock')
+      expect(response.body).to include('<a href="/artists/2">ABBA</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/3">Taylor Swift</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/4">Nina Simone</a>')
+      expect(response.body).to include('Pop')
+      expect(response.body).to include('<a href="/artists/5">Kiasmos</a>')
+      expect(response.body).to include('Experimental')
+      expect(response.body).to include('<a href="/artists/6">Wild Nothing</a>')
+      expect(response.body).to include('indie')
     end
   end
 
