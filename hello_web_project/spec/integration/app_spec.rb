@@ -23,26 +23,20 @@ describe Application do
   end
 
   context "GET to /hello" do
-    it "should return 'Hello Eliza'" do
-      # Send a GET request to /hello
-      # with a query parameter
-      # and returns a response object we can test.
-      response = get("/hello", name: "Eliza")
+    it 'returns an html hello message with given name' do
+      response = get('/hello', name: 'Eliza')
 
-      # Assert the response status code and body.
       expect(response.status).to eq(200)
-      expect(response.body).to eq("Hello Eliza")
+      expect(response.body).to include
+      ('<h1>Hello Eliza!</h1>')
     end
 
-    it "should return 'Hello Rosa'" do
-      # Send a GET request to /hello
-      # with a query parameter
-      # and returns a response object we can test.
-      response = get("/hello", name: "Rosa")
+    it 'returns an html hello message with different given name' do
+      response = get('/hello', name: 'Owen')
 
-      # Assert the response status code and body.
       expect(response.status).to eq(200)
-      expect(response.body).to eq("Hello Rosa")
+      expect(response.body).to include
+      ('<h1>Hello Owen!</h1>')
     end
   end
 
